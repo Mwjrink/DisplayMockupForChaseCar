@@ -102,8 +102,8 @@
             var srcParent = src.parentNode;
             // var tgt = ev.currentTarget.getFirstChildNode;
 
-            for(var i=0; i>-1; i++){
-                if(ev.currentTarget.children[i].id.startsWith("drag")){
+            for (var i = 0; i > -1; i++) {
+                if (ev.currentTarget.children[i].id.startsWith("drag")) {
                     tgt = ev.currentTarget.children[i];
                     break;
                 }
@@ -124,12 +124,21 @@
             }
 
         }
+
+        // function SQLACCESS() {
+        //     var req = new XMLHTTPRequest();
+        //     req.addEventListener("load", function (data) {
+
+        //     });
+        //     req.open("get", "http://example.com", true);
+        //     req.send();
+        // }
     </script>
 </head>
 
 <body>
     <div class="header" id="Hello">
-        <h1>UWaterloo Midnight Sun Telemetry Data</h1>
+        <h1>UWaterloo Midnight Sun Telemetry Data (Drag and drop the theoretical elements)</h1>
     </div>
 
     <div class="row" style="width: 100%">
