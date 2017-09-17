@@ -3,6 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="smoothie.js"></script>
     <style>
         .div1 {
             width: 300px;
@@ -11,6 +12,7 @@
             margin: 3px;
             max-width: calc(85% - 6px);
             resize: both;
+            /* display: inline-block; */
         }
 
         .div2 {
@@ -23,6 +25,25 @@
 
         .div3 {
             margin: 5px;
+            /* display: inline-block; */
+            border: 2px solid black;
+            width: 100%;
+            height: 100%;
+        }
+
+        [id*="chart-"] {
+            resize: both;
+            float: left;
+        }
+
+        [class*="chart-"] {
+            resize: both;
+            float: left;
+        }
+
+        [id*="#canvas-"] {
+            width: 100%;
+            height: 100%;
         }
 
         [id*="#drag-"] {
@@ -85,7 +106,18 @@
             float: left;
         }
 
-        #Container-1 {}
+        div.smoothie-chart-tooltip {
+            background: #444;
+            padding: 1em;
+            margin-top: 20px;
+            font-family: consolas;
+            color: white;
+            font-size: 10px;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+        }
+        /* #Container-1 {} */
     </style>
     <script>
         function allowDrop(ev) {
@@ -125,6 +157,22 @@
 
         }
 
+        // var smoothie = new SmoothieChart();
+        // smoothie.streamTo(document.getElementById("mycanvas"));
+
+        // Randomly add a data point every 500ms
+        var random = new TimeSeries();
+        setInterval(function () {
+            random.append(new Date().getTime(), Math.random() * 10000);
+        }, 500);
+
+        function createTimeline() {
+            var chart = new SmoothieChart();
+            chart.addTimeSeries(random, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
+            //currently temporary, chnage to dynamic with numbers, or seperate methods for eatch chart
+            chart.streamTo(document.getElementById("chart-1"), 500);
+        }
+
         // function SQLACCESS() {
         //     var req = new XMLHTTPRequest();
         //     req.addEventListener("load", function (data) {
@@ -136,7 +184,7 @@
     </script>
 </head>
 
-<body>
+<body onload="createTimeline()">
     <div class="header" id="Hello">
         <h1>UWaterloo Midnight Sun Telemetry Data (Drag and drop the theoretical elements)</h1>
     </div>
@@ -179,8 +227,9 @@
             <div class="div2" id="Container-1">
                 <p>Container-1</p>
             </div>
-            <div id="drag-1" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
-                <p>In theory element 1</p>
+            <div id="drag-1" class="div3" draggable="true" ondragstart="drag(event)">
+                <!-- <p>In theory element 1</p> -->
+                <canvas id="chart-1" class="chart-1"></canvas>
             </div>
         </div>
         <div id="Container-2" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
