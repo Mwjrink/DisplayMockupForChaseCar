@@ -1,0 +1,334 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .div1 {
+            width: 300px;
+            height: 120px;
+            border: 2px solid;
+            margin: 3px;
+            max-width: calc(85% - 6px);
+            resize: both;
+        }
+
+        .div2 {
+            background-color: #000000;
+            color: rgb(255, 255, 255);
+            width: 100%;
+            height: 52px;
+            padding-left: 5px;
+        }
+
+        .div3 {
+            margin: 5px;
+        }
+
+        [id*="#drag-"] {
+            min-width: 200px;
+            min-height: 50px;
+            width: 100%;
+            height: 100%;
+            border: 1px solid green;
+        }
+
+        div {
+            /* width: 300px; */
+            overflow: auto;
+            float: left;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-family: "Lucida Sans", sans-serif;
+        }
+
+        .header {
+            background-color: #9933cc;
+            color: #ffffff;
+            padding: 15px;
+            width: 100%;
+        }
+
+        .menuContainer {
+            height: 100%;
+            float: left;
+            padding: 10px;
+            min-width: 15%;
+            max-width: 15%;
+        }
+
+        .menu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu li {
+            padding: 8px;
+            margin-bottom: 7px;
+            background-color: #33b5e5;
+            color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        }
+
+        .menu li:hover {
+            background-color: #0099cc;
+        }
+
+        [class*="Container-"] {
+            resize: both;
+            float: left;
+        }
+
+        #Container-1 {}
+    </style>
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("src", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var src = document.getElementById(ev.dataTransfer.getData("src"));
+            var srcParent = src.parentNode;
+            // var tgt = ev.currentTarget.getFirstChildNode;
+
+            for(var i=0; i>-1; i++){
+                if(ev.currentTarget.children[i].id.startsWith("drag")){
+                    tgt = ev.currentTarget.children[i];
+                    break;
+                }
+            }
+
+            ev.currentTarget.replaceChild(src, tgt);
+            srcParent.appendChild(tgt);
+        }
+
+        function buttonClicked(num) {
+            var s = "Container-" + num;
+            var x = document.getElementById(s);
+
+            if (x.style.display === 'none') {
+                x.style.display = 'block';
+            } else {
+                x.style.display = 'none';
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="header" id="Hello">
+        <h1>UWaterloo Midnight Sun Telemetry Data</h1>
+    </div>
+
+    <div class="row" style="width: 100%">
+
+        <div class="menu menuContainer" style="height: 100%">
+            <!-- ul>li*20[onClick=buttonClicked($)]{Container $} -->
+            <ul>
+                <li onclick="buttonClicked(1)">Container 1</li>
+                <li onclick="buttonClicked(2)">Container 2</li>
+                <li onclick="buttonClicked(3)">Container 3</li>
+                <li onclick="buttonClicked(4)">Container 4</li>
+                <li onclick="buttonClicked(5)">Container 5</li>
+                <li onclick="buttonClicked(6)">Container 6</li>
+                <li onclick="buttonClicked(7)">Container 7</li>
+                <li onclick="buttonClicked(8)">Container 8</li>
+                <li onclick="buttonClicked(9)">Container 9</li>
+                <li onclick="buttonClicked(10)">Container 10</li>
+                <li onclick="buttonClicked(11)">Container 11</li>
+                <li onclick="buttonClicked(12)">Container 12</li>
+                <li onclick="buttonClicked(13)">Container 13</li>
+                <li onclick="buttonClicked(14)">Container 14</li>
+                <li onclick="buttonClicked(15)">Container 15</li>
+                <li onclick="buttonClicked(16)">Container 16</li>
+                <li onclick="buttonClicked(17)">Container 17</li>
+                <li onclick="buttonClicked(18)">Container 18</li>
+                <li onclick="buttonClicked(19)">Container 19</li>
+                <li onclick="buttonClicked(20)">Container 20</li>
+            </ul>
+
+        </div>
+
+        <!-- div*20[id=Container-$][class=div1][ondrop=drop(event)][ondragover=allowDrop(event)]>(div[class=div2][id=Container-$]>p{Container-$})+div[id=drag-$][class=div3][draggable=true][ondragstart=drag(event)][style=background-color:#008CFF]>p{In theory element $} -->
+
+        <!-- not being used -->
+        <!-- div*20[id=Container-$][class=div1][ondrop=drop(event)][ondragover=allowDrop(event)]>(div[id=drag-$][class=div3][draggable=true][ondragstart=drag(event)][style=background-color:#008CFF]>p{In theory element $ .})+div[class=div2][id=Container-$]>p{Container-$} -->
+
+        <div id="Container-1" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-1">
+                <p>Container-1</p>
+            </div>
+            <div id="drag-1" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 1</p>
+            </div>
+        </div>
+        <div id="Container-2" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-2">
+                <p>Container-2</p>
+            </div>
+            <div id="drag-2" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 2</p>
+            </div>
+        </div>
+        <div id="Container-3" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-3">
+                <p>Container-3</p>
+            </div>
+            <div id="drag-3" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 3</p>
+            </div>
+        </div>
+        <div id="Container-4" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-4">
+                <p>Container-4</p>
+            </div>
+            <div id="drag-4" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 4</p>
+            </div>
+        </div>
+        <div id="Container-5" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-5">
+                <p>Container-5</p>
+            </div>
+            <div id="drag-5" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 5</p>
+            </div>
+        </div>
+        <div id="Container-6" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-6">
+                <p>Container-6</p>
+            </div>
+            <div id="drag-6" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 6</p>
+            </div>
+        </div>
+        <div id="Container-7" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-7">
+                <p>Container-7</p>
+            </div>
+            <div id="drag-7" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 7</p>
+            </div>
+        </div>
+        <div id="Container-8" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-8">
+                <p>Container-8</p>
+            </div>
+            <div id="drag-8" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 8</p>
+            </div>
+        </div>
+        <div id="Container-9" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-9">
+                <p>Container-9</p>
+            </div>
+            <div id="drag-9" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 9</p>
+            </div>
+        </div>
+        <div id="Container-10" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-10">
+                <p>Container-10</p>
+            </div>
+            <div id="drag-10" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 10</p>
+            </div>
+        </div>
+        <div id="Container-11" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-11">
+                <p>Container-11</p>
+            </div>
+            <div id="drag-11" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 11</p>
+            </div>
+        </div>
+        <div id="Container-12" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-12">
+                <p>Container-12</p>
+            </div>
+            <div id="drag-12" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 12</p>
+            </div>
+        </div>
+        <div id="Container-13" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-13">
+                <p>Container-13</p>
+            </div>
+            <div id="drag-13" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 13</p>
+            </div>
+        </div>
+        <div id="Container-14" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-14">
+                <p>Container-14</p>
+            </div>
+            <div id="drag-14" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 14</p>
+            </div>
+        </div>
+        <div id="Container-15" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-15">
+                <p>Container-15</p>
+            </div>
+            <div id="drag-15" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 15</p>
+            </div>
+        </div>
+        <div id="Container-16" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-16">
+                <p>Container-16</p>
+            </div>
+            <div id="drag-16" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 16</p>
+            </div>
+        </div>
+        <div id="Container-17" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-17">
+                <p>Container-17</p>
+            </div>
+            <div id="drag-17" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 17</p>
+            </div>
+        </div>
+        <div id="Container-18" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-18">
+                <p>Container-18</p>
+            </div>
+            <div id="drag-18" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 18</p>
+            </div>
+        </div>
+        <div id="Container-19" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-19">
+                <p>Container-19</p>
+            </div>
+            <div id="drag-19" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 19</p>
+            </div>
+        </div>
+        <div id="Container-20" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="div2" id="Container-20">
+                <p>Container-20</p>
+            </div>
+            <div id="drag-20" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <p>In theory element 20</p>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+</html>
