@@ -3,6 +3,8 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="css-element-queries/src/ResizeSensor.js"></script>
+    <script src="css-element-queries/src/ElementQueries.js"></script>
     <script src="smoothie.js"></script>
     <style>
         .div1 {
@@ -27,18 +29,20 @@
             margin: 5px;
             /* display: inline-block; */
             border: 2px solid black;
+            width: 97%;
+            height: calc(90% - 52px);
+        }
+
+        [id*="chart-"] {
+            float: left;
             width: 100%;
             height: 100%;
         }
 
-        [id*="chart-"] {
-            resize: both;
-            float: left;
-        }
-
         [class*="chart-"] {
-            resize: both;
             float: left;
+            width: 100%;
+            height: 100%;
         }
 
         [id*="#canvas-"] {
@@ -117,6 +121,25 @@
             width: 100%;
             height: 100%;
         }
+
+        .widget-name h2 {
+            font-size: 12px;
+        }
+
+        .widget-name[min-width~="400px"] h2 {
+            font-size: 18px;
+        }
+
+        .widget-name[min-width~="600px"] h2 {
+            padding: 55px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .widget-name[min-width~="700px"] h2 {
+            font-size: 34px;
+            color: red;
+        }
         /* #Container-1 {} */
     </style>
     <script>
@@ -169,8 +192,10 @@
         function createTimeline() {
             var chart = new SmoothieChart();
             chart.addTimeSeries(random, { strokeStyle: 'rgba(0, 255, 0, 1)', fillStyle: 'rgba(0, 255, 0, 0.2)', lineWidth: 4 });
+
             //currently temporary, chnage to dynamic with numbers, or seperate methods for eatch chart
             chart.streamTo(document.getElementById("chart-1"), 500);
+
         }
 
         // function SQLACCESS() {
@@ -236,8 +261,9 @@
             <div class="div2" id="Container-2">
                 <p>Container-2</p>
             </div>
-            <div id="drag-2" class="div3" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
-                <p>In theory element 2</p>
+            <div id="drag-2" class="div3 widget-name" draggable="true" ondragstart="drag(event)" style="background-color:#008CFF">
+                <!-- <p>In theory element 2</p> -->
+                    <h2>Element responsiveness FTW!</h2>
             </div>
         </div>
         <div id="Container-3" class="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
